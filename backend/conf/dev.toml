@@ -3,9 +3,9 @@ port=1234
 
 [psql]
 ssl_mode="disable"
-database="exercise_parser"
-user="exercise"
-password="parser"
+database="streaming"
+user="server"
+password="server"
 host="localhost"
 port=5432
 logging=false

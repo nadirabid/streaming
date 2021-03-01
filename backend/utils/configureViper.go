@@ -28,4 +28,3 @@ func ConfigureViper(confFile string) (*viper.Viper, error) {
 
 	return v, nil
 }
-x

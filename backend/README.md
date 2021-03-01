@@ -1,9 +1,16 @@
+#### Download/create HLS content for local
+
+```
+sh download.sh
+```
+
+
 #### Gen HLS files
 
 Option 1
 
 ```bash
-vlod.sh filename.mkv
+sh vlod.sh filename.mkv
 ```
 
 Option 2
@@ -21,7 +28,7 @@ psql -d postgres -f setup.sql
 To access db on terminal:
 
 ```
-psql -d exercise_parser
+psql -d streaming
 ```
 
 Also - download Postico for Mac - super good.

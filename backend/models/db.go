@@ -7,8 +7,10 @@ import (
 	_ "github.com/golang-migrate/migrate/database/postgres"
 	_ "github.com/golang-migrate/migrate/source/file"
 
-	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // NewDatabase creates a new sql.DB instance
@@ -20,7 +22,7 @@ func NewDatabase(v *viper.Viper) (*gorm.DB, error) {
 	database := v.GetString("psql.database")
 	sslmode := v.GetString("psql.ssl_mode")
 
-	db, err := gorm.Open("postgres", fmt.Sprintf(
+	db, err := gorm.Open(postgres.Open(fmt.Sprintf(
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		host,
 		port,
@@ -28,9 +30,7 @@ func NewDatabase(v *viper.Viper) (*gorm.DB, error) {
 		password,
 		database,
 		sslmode,
-	))
-
-	db.LogMode(v.GetBool("psql.logging"))
+	)), &gorm.Config{})
 
 	if err != nil {
 		return nil, err
