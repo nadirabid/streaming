@@ -89,28 +89,29 @@ while getopts "n:u:" arg; do
   case $arg in
     n) NAME=$OPTARG;;
     u) URL=$OPTARG;;
+    f) FOLDER=$OPTARG;;
   esac
 done
 
-rm -rf $BASE_DIR/$NAME* # clean old video files
+rm -rf $BASE_DIR/$FOLDER/$NAME* # clean old video files
 
 brew list youtube-dl || brew install youtube-dl
 
-youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o $BASE_DIR/$NAME.mp4 $URL
+youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o $BASE_DIR/$FOLDER/$NAME.mp4 $URL
 
-mkdir -p $BASE_DIR/$NAME/thumbnails
+mkdir -p $BASE_DIR/$FOLDER/$NAME/thumbnails
 
 # cut to 30 seconds or hls will take time
-ffmpeg -ss 00:00:00 -i $BASE_DIR/$NAME.mp4 -ss 00:00:00 -t 00:00:30 $BASE_DIR/$NAME/vid.mp4
+ffmpeg -ss 00:00:00 -i $BASE_DIR/$FOLDER/$NAME.mp4 -ss 00:00:00 -t 00:00:30 $BASE_DIR/$FOLDER/$NAME/vid.mp4
 
 # create hls
-vlod $BASE_DIR/$NAME/vid.mp4 $BASE_DIR/$NAME/hls
+vlod $BASE_DIR/$FOLDER/$NAME/vid.mp4 $BASE_DIR/$FOLDER/$NAME/hls
 
 # create thumbnails
 for size in 842x480 1280x720 1920x1080
 do
-    ffmpeg -i $BASE_DIR/$NAME/vid.mp4 -vf  "thumbnail,scale=$size" -frames:v 1 $BASE_DIR/$NAME/thumbnails/$size.jpg
+    ffmpeg -i $BASE_DIR/$FOLDER/$NAME/vid.mp4 -vf  "thumbnail,scale=$size" -frames:v 1 $BASE_DIR/$FOLDER/$NAME/thumbnails/$size.jpg
 done
 
-rm -rf $BASE_DIR/$NAME*.mp4
-rm -rf $BASE_DIR/$NAME*/*.mp4
+rm -rf $BASE_DIR/$FOLDER/$NAME*.mp4
+rm -rf $BASE_DIR/$FOLDER/$NAME*/*.mp4

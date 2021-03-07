@@ -1,11 +1,24 @@
 package models
 
-type Series struct {
+type MiniSeries struct {
 	Model
-	Name          string `json:"name"`
-	SeriesNumber  int    `json:"int"`
-	EpisodeNumber int    `json:"int"`
-	AssetPath     string `json:"asset_path"`
+	MediaMetadata
+	EpisodeNumber int  `json:"episode_number"`
+	ContentID     uint `json:"content_id"`
+}
+
+func (MiniSeries) TableName() string {
+	return "mini_series"
+}
+
+type Content struct {
+	Model
+	MediaMetadata
+	MiniSeries []MiniSeries `json:"mini_series"`
+}
+
+func (Content) TableName() string {
+	return "content"
 }
 
 /*
