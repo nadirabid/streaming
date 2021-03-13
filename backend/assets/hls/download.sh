@@ -83,15 +83,36 @@ vlod() {
     echo "Done - encoded HLS is at ${target}/"
 }
 
+
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-while getopts "n:u:" arg; do
+while getopts "n:u:f" arg; do
   case $arg in
     n) NAME=$OPTARG;;
     u) URL=$OPTARG;;
     f) FOLDER=$OPTARG;;
   esac
 done
+
+if [ -z "${BASE_DIR}" ]; then
+    echo "BASE_DIR IS EMPTY"
+    exit 1
+fi
+
+if [ -z "${NAME}" ]; then
+    echo "NAME IS EMPTY"
+    exit 1
+fi
+
+if [ -z "${URL}" ]; then
+    echo "URL IS EMPTY"
+    exit 1
+fi
+
+if [ -z "${FOLDER}" ]; then
+    echo "FOLDER IS EMPTY"
+    exit 1
+fi
 
 rm -rf $BASE_DIR/$FOLDER/$NAME* # clean old video files
 
