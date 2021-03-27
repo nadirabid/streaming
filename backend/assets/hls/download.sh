@@ -83,14 +83,19 @@ vlod() {
     echo "Done - encoded HLS is at ${target}/"
 }
 
-
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-while getopts "n:u:f" arg; do
-  case $arg in
-    n) NAME=$OPTARG;;
-    u) URL=$OPTARG;;
-    f) FOLDER=$OPTARG;;
+while getopts ":n:u:f:" arg; do
+  case ${arg} in
+    n ) 
+        NAME=$OPTARG 
+        ;;
+    u ) 
+        URL=$OPTARG 
+        ;;
+    f )
+        FOLDER=$OPTARG 
+        ;;
   esac
 done
 

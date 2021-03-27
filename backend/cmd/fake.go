@@ -40,6 +40,7 @@ func fake(cmd *cobra.Command, args []string) error {
 
 	for name, url := range urls {
 		cmdStr := fmt.Sprintf("%s -f %s -n %s -u '%s'", downloadSh, "summer_adrift", name, url)
+		fmt.Println(cmdStr)
 		_, err := exec.Command("/bin/sh", "-c", cmdStr).Output()
 
 		fmt.Println(downloadSh, "hello")
