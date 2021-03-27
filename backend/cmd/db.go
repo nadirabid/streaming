@@ -19,3 +19,19 @@ func migrate(cmd *cobra.Command, args []string) error {
 
 	return nil
 }
+
+var migrateCmd = &cobra.Command{
+	Use:   "migrate",
+	Short: "Apply any new migrations",
+	RunE:  migrate,
+}
+
+var dbCmd = &cobra.Command{
+	Use:   "db",
+	Short: "Commands to interact with database",
+}
+
+func init() {
+	rootCmd.AddCommand(dbCmd)
+	dbCmd.AddCommand(migrateCmd)
+}

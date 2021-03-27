@@ -119,25 +119,25 @@ if [ -z "${FOLDER}" ]; then
     exit 1
 fi
 
-rm -rf $BASE_DIR/$FOLDER/$NAME* # clean old video files
+rm -rf $FOLDER/$NAME* # clean old video files
 
 brew list youtube-dl || brew install youtube-dl
 
-youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o $BASE_DIR/$FOLDER/$NAME.mp4 $URL
+youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' -o $FOLDER/$NAME.mp4 $URL
 
-mkdir -p $BASE_DIR/$FOLDER/$NAME/thumbnails
+mkdir -p $FOLDER/$NAME/thumbnails
 
 # cut to 30 seconds or hls will take time
-ffmpeg -ss 00:00:00 -i $BASE_DIR/$FOLDER/$NAME.mp4 -ss 00:00:00 -t 00:00:30 $BASE_DIR/$FOLDER/$NAME/vid.mp4
+ffmpeg -ss 00:00:00 -i $FOLDER/$NAME.mp4 -ss 00:00:00 -t 00:00:30 $FOLDER/$NAME/vid.mp4
 
 # create hls
-vlod $BASE_DIR/$FOLDER/$NAME/vid.mp4 $BASE_DIR/$FOLDER/$NAME/hls
+vlod $FOLDER/$NAME/vid.mp4 $FOLDER/$NAME/hls
 
 # create thumbnails
 for size in 842x480 1280x720 1920x1080
 do
-    ffmpeg -i $BASE_DIR/$FOLDER/$NAME/vid.mp4 -vf  "thumbnail,scale=$size" -frames:v 1 $BASE_DIR/$FOLDER/$NAME/thumbnails/$size.jpg
+    ffmpeg -i $FOLDER/$NAME/vid.mp4 -vf  "thumbnail,scale=$size" -frames:v 1 $FOLDER/$NAME/thumbnails/$size.jpg
 done
 
-rm -rf $BASE_DIR/$FOLDER/$NAME*.mp4
-rm -rf $BASE_DIR/$FOLDER/$NAME*/*.mp4
+rm -rf $FOLDER/$NAME*.mp4
+rm -rf $FOLDER/$NAME*/*.mp4

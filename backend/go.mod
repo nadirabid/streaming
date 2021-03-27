@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-sdk-go v1.37.20
 	github.com/fatih/color v1.10.0
 	github.com/golang-migrate/migrate v3.5.4+incompatible
+	github.com/hokaccha/go-prettyjson v0.0.0-20210113012101-fb4e108d2519
 	github.com/jinzhu/gorm v1.9.16
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0 // indirect

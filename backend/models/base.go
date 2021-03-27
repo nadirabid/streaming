@@ -9,9 +9,3 @@ type Model struct {
 	UpdatedAt time.Time  `json:"updated_at"`
 	DeletedAt *time.Time `json:"-" sql:"index"`
 }
-
-type MediaMetadata struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	AssetPath   string `json:"asset_path"`
-}

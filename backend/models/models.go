@@ -1,5 +1,11 @@
 package models
 
+type MediaMetadata struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	AssetPath   string `json:"asset_path"`
+}
+
 type MiniSeries struct {
 	Model
 	MediaMetadata
