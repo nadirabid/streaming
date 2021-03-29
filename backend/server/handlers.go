@@ -33,7 +33,7 @@ func handleGetContent(c echo.Context) error {
 	}
 
 	content := &models.Content{}
-	if err := db.Where("id = ?", id).First(content).Error; err != nil {
+	if err := db.Preload("MiniSeries").Where("id = ?", id).First(content).Error; err != nil {
 		return ctx.JSON(http.StatusInternalServerError, newErrorMessage(err.Error()))
 	}
 
