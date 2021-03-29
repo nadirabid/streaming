@@ -13,11 +13,14 @@ func handleGetPaginatedContentList(c echo.Context) error {
 	db := ctx.db
 
 	contentList := []models.Content{}
-	if err := db.Preload("MiniSeries").Scopes(paginate(ctx)).Find(contentList).Error; err != nil {
+	q := db.Preload("MiniSeries")
+
+	listResponse, err := paging(ctx, q, &contentList)
+	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, newErrorMessage(err.Error()))
 	}
 
-	return ctx.JSON(http.StatusOK, contentList)
+	return ctx.JSON(http.StatusOK, listResponse)
 }
 
 func handleGetContent(c echo.Context) error {
@@ -30,7 +33,7 @@ func handleGetContent(c echo.Context) error {
 	}
 
 	content := &models.Content{}
-	if err := db.Scopes(paginate(ctx)).Where("id = ?", id).First(content).Error; err != nil {
+	if err := db.Where("id = ?", id).First(content).Error; err != nil {
 		return ctx.JSON(http.StatusInternalServerError, newErrorMessage(err.Error()))
 	}
 
