@@ -96,7 +96,12 @@ func New(v *viper.Viper) error {
 		}
 	})
 
-	e.Static("/hls", "assets/hls")
+	e.Static("/assets/content", "assets/content")
+
+	apiRoutes := e.Group("/api")
+
+	apiRoutes.GET("/content", handleGetPaginatedContentList)
+	apiRoutes.GET("/content/:id", handleGetContent)
 
 	return e.Start(fmt.Sprintf("0.0.0.0:%s", v.GetString("server.port")))
 }

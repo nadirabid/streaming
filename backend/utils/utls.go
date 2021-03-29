@@ -48,3 +48,11 @@ func PrettyStringify(v interface{}) string {
 
 	return string(b)
 }
+
+func GetStringOrDefault(value string, defaultValue string) string {
+	if value == "" {
+		return defaultValue
+	}
+
+	return value
+}
