@@ -26,7 +26,8 @@ func fake(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	basePath := fmt.Sprintf("%s/assets/content/%s", utils.GetBasePath(), "summer_adrift")
+	basePath := fmt.Sprintf("assets/content/%s", "summer_adrift")
+	fullBasePath := fmt.Sprintf("%s/%s", utils.GetBasePath(), basePath)
 
 	content := &models.Content{}
 	content.Name = "A summer adrift"
@@ -53,7 +54,7 @@ func fake(cmd *cobra.Command, args []string) error {
 
 	for name, url := range urls {
 		successer.Println("Starting download: ", name, url)
-		cmdStr := fmt.Sprintf("%s -f %s -n %s -u '%s'", downloadSh, basePath, name, url)
+		cmdStr := fmt.Sprintf("%s -f %s -n %s -u '%s'", downloadSh, fullBasePath, strings.ToLower(name), url)
 		_, err := exec.Command("/bin/sh", "-c", cmdStr).Output()
 
 		if err != nil {

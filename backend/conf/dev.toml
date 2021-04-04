@@ -16,3 +16,6 @@ dir="migrations"
 [s3]
 enabled="true"
 region="us-east-2"
+
+[storage]
+type="filesystem"
