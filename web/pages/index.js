@@ -1,6 +1,12 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 import Image from 'next/image'
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+
+import styles from '../styles/Home.module.scss'
+import { screenSizes } from '../store/screenSize/actions'
 
 export default function Home() {
   let rows = []
@@ -8,34 +14,30 @@ export default function Home() {
   for (let i = 0; i < 20; i++) {
     rows.push(
       <div className={styles.row}>
-        <Columns />
+        <ConnectedContentRow />
       </div>
     )
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.home}>
       <Head>
-        <title>Streaming</title>
+        <title>Qissa</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <div className={styles.header}>
-          <span>
-            Streaming
-          </span>
-
-          Home
-
-          Movies
-
-          TV Shows
-
-          Latest
+        <div className={styles.navigationContainer}>
+          <div className={styles.navigation}>
+            <span>Qissa</span>
+            <span>Movies</span>
+            <span>TV Shows</span>
+          </div>
         </div>
 
-        <div className={styles.content}>
+        <HeroContent />
+
+        <div >
           {rows}
         </div>
       </main>
@@ -43,25 +45,54 @@ export default function Home() {
   )
 }
 
-
-
-function Columns() {
-  const images = [1,2,3,4,5,6,7].map(() =>
-    <span className={styles.imageTest}>
-      <Image
-        className={styles.image}
-        height="142"
-        width="250"
-        layout="intrinsic"
-        src="http://localhost:1234/assets/content/summer_adrift/one/thumbnails/842x480.jpg"
-      />
-    </span>
-  )
-
+function HeroContent() {
   return (
-    <div className={styles.test}>
-      {images}
+    <div className={styles.heroContainer}>
+      <img
+        src="http://localhost:1234/assets/content/summer_adrift/one/thumbnails/842x480.jpg"
+        className={styles.heroImage}
+      />
+      <div className={styles.heroText}>
+        This is some text
+      </div>
     </div>
   )
 }
 
+function ContentRow({ imageWidth, imageHeight }) {
+  const [isShown, setIsShown] = useState(false)
+
+  const images = [1,2,3,4,5,6].map((i) =>
+    <Image
+      key={i}
+      className={styles.image}
+      height={imageHeight}
+      width={imageWidth}
+      quality={100}
+      layout="intrinsic"
+      src="http://localhost:1234/assets/content/summer_adrift/one/thumbnails/842x480.jpg"
+    />
+  )
+
+  return (
+    <div
+      className={styles.contentRowContainer}
+      onMouseEnter={() => setIsShown(true)}
+      onMouseLeave={() => setIsShown(false)}
+    >
+      {isShown && (<ChevronLeft className={styles.icon} />)}
+      <div className={styles.rowsContainer}>{images}</div>
+      {isShown && (<ChevronRight className={styles.icon} />)}
+    </div>
+  )
+}
+
+const ConnectedContentRow = connect(({ screenSize }) => {
+  const sizeValue = screenSizes[screenSize];
+
+  const numOfItems = 6
+  const imageWidth = (sizeValue - (numOfItems - 1) * 8) / numOfItems 
+  const imageHeight = imageWidth * 0.57
+
+  return { imageWidth, imageHeight }
+})(ContentRow)

@@ -1,0 +1,136 @@
+@import './constants';
+
+.home {
+  min-height: 100vh;
+}
+
+main {
+  > .navigationContainer {
+    backdrop-filter: blur(5px);
+    background-color: $bgColor;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding-top: 1.2em;
+    padding-bottom: 1.2em;
+    color: white;
+    font-weight: 400;
+    padding-right: 2em;
+    padding-left: 2em;
+
+    > .navigation {
+      @media (min-width: $sm) {
+        width: $sm;
+      }
+
+      @media (min-width: $md) {
+        width: $md;
+      }
+
+      @media (min-width: $lg) {
+        width: $lg;
+      }
+
+      @media (min-width: $xl) {
+        width: $xl;
+      }
+  
+      margin: auto;
+    
+      > span {
+        margin-right: 2em;
+      }
+    }
+  }
+  
+}
+
+.contentRowContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+
+  > .rowsContainer {
+    @media (min-width: $sm) {
+      width: $sm;
+    }
+  
+    @media (min-width: $md) {
+      width: $md;
+    }
+  
+    @media (min-width: $lg) {
+      width: $lg;
+    }
+  
+    @media (min-width: $xl) {
+      width: $xl;
+    }
+  
+    overflow:hidden;
+    white-space: nowrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .icon {
+    color: #fff;
+    font-size: 3em;
+  }
+}
+
+.image {
+  border-radius: 0.2em;
+}
+
+.heroContainer {
+  position: relative;
+}
+
+.heroImage {
+  height: 40vw;
+  width: 100vw;
+  object-fit: cover;
+}
+
+.heroText {
+  display: none;
+  position: absolute;
+  top: 12vw;
+  color: white;
+}
+
+@media screen and (min-width: 1200px) {
+  .heroText {
+    font-size: 4em;
+    margin-left: 0.5em;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .heroText {
+    font-size: 2em;
+    margin-left: 1em;
+  }
+}
+
+.box{
+  position: relative;
+  display: inline-block; /* Make the width of box same as image */
+
+  .text{
+    position: absolute;
+    z-index: 999;
+    margin: 0 auto;
+    left: 0;
+    right: 0;        
+    text-align: center;
+    top: 40%; /* Adjust this value to move the positioned div up and down */
+    background: rgba(0, 0, 0, 0.8);
+    font-family: Arial,sans-serif;
+    color: #fff;
+    width: 60%; /* Set the width of the positioned div */
+  }
+}
